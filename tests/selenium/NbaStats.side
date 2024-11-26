@@ -1,0 +1,357 @@
+{
+  "id": "eb59dc10-78d1-4b3c-aaee-9204537ca437",
+  "version": "2.0",
+  "name": "NbaStats",
+  "url": "http://127.0.0.1:5000",
+  "tests": [{
+    "id": "fe57fe9b-c977-4eb1-b0f7-efaa8f39aca9",
+    "name": "Login admin error",
+    "commands": [{
+      "id": "2f7779ad-d9c2-4d57-a663-2b2192f2d5f9",
+      "comment": "",
+      "command": "open",
+      "target": "/admin/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "628387f4-a6a0-4a8d-925e-c10d879f2819",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1055x600",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f8bbca06-4c6f-4ca3-946d-1844c955d527",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "636edc4e-7b85-40f8-9953-120aeec2473f",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "admin@gmail.com"
+    }, {
+      "id": "4104e1b6-3c5d-45a5-9627-14c3876a08a3",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "537a8bd5-b5dc-44ff-bb1d-b5befeb5cf8b",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "WrongPassword"
+    }, {
+      "id": "38e71652-3805-4e21-b62c-923f7050a177",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//button[@type='submit']",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "53a76232-9a8f-4576-a119-1614b350d03b",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.fw-light",
+      "targets": [
+        ["css=.fw-light", "css:finder"],
+        ["xpath=//div[@id='layoutAuthentication_content']/main/div/div/div/div/div/h3", "xpath:idRelative"],
+        ["xpath=//h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "c33324e8-de20-48dc-b96a-f433774ba774",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.fw-light",
+      "targets": [
+        ["css=.fw-light", "css:finder"],
+        ["xpath=//div[@id='layoutAuthentication_content']/main/div/div/div/div/div/h3", "xpath:idRelative"],
+        ["xpath=//h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": "Login"
+    }]
+  }, {
+    "id": "cd54cc33-bf42-433e-ba8d-4b0294e1da39",
+    "name": "Login admin valid",
+    "commands": [{
+      "id": "c2962401-5749-4072-9a12-d1fe372ad764",
+      "comment": "",
+      "command": "open",
+      "target": "/admin/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aae11b61-e9bc-4437-a282-dc56c4f1a2a8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1055x600",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2b870c15-636d-4105-9c25-9a2981fdb5b3",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f84b4a5b-06e6-46aa-a1cb-8166008dd3c4",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "admin@gmail.com"
+    }, {
+      "id": "91fcb512-c67f-4fad-865b-7c79fd74cad0",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "613e80a6-7927-4530-b75d-57089a50a136",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Admin$00"
+    }, {
+      "id": "9e020720-6a3f-421e-8dce-43f8eb488304",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//button[@type='submit']",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "5e8dec81-414b-454d-abab-18febc093d1c",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.navbar-brand",
+      "targets": [
+        ["linkText=NBA Project Nicolà Bertolazzi", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'NBA Project Nicolà Bertolazzi')]", "xpath:link"],
+        ["xpath=//nav[@id='sidenavAccordion']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'NBA Project Nicolà Bertolazzi')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "95db6183-cf21-499a-b0fa-532ed39e7918",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.navbar-brand",
+      "targets": [
+        ["linkText=NBA Project Nicolà Bertolazzi", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'NBA Project Nicolà Bertolazzi')]", "xpath:link"],
+        ["xpath=//nav[@id='sidenavAccordion']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'NBA Project Nicolà Bertolazzi')]", "xpath:innerText"]
+      ],
+      "value": "NBA Project Nicolà Bertolazzi"
+    }]
+  }, {
+    "id": "9a33216d-de9e-4a12-b0a0-2e43849f26ac",
+    "name": "Logout",
+    "commands": [{
+      "id": "4ff13f7f-0ebb-41a1-b4b8-d665955fb961",
+      "comment": "",
+      "command": "open",
+      "target": "/admin/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "46b4b65f-5169-4c2e-a777-44804b544680",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1055x600",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "08d52d7c-379f-44b7-8660-6f47cf9df6e8",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2152d3c2-80f0-448b-a4b9-802ef1089773",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "admin@gmail.com"
+    }, {
+      "id": "b1c31db1-66d8-403b-bfbc-4669fc987c3e",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c6e58c0-3743-4bb8-8a06-ce9f11188c81",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Admin$00"
+    }, {
+      "id": "2376c0e7-7837-486e-bcb4-9ead0b10759c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "xpath=//button[@type='submit']",
+      "targets": [],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "aa5a08b7-29d6-4103-8f58-d7b565c8b8ea",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.navbar-brand",
+      "targets": [
+        ["linkText=NBA Project Nicolà Bertolazzi", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'NBA Project Nicolà Bertolazzi')]", "xpath:link"],
+        ["xpath=//nav[@id='sidenavAccordion']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'NBA Project Nicolà Bertolazzi')]", "xpath:innerText"]
+      ],
+      "value": "30000"
+    }, {
+      "id": "811fbd60-ef21-4012-98b7-9291ab4a1569",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.navbar-brand",
+      "targets": [
+        ["linkText=NBA Project Nicolà Bertolazzi", "linkText"],
+        ["css=.navbar-brand", "css:finder"],
+        ["xpath=//a[contains(text(),'NBA Project Nicolà Bertolazzi')]", "xpath:link"],
+        ["xpath=//nav[@id='sidenavAccordion']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'NBA Project Nicolà Bertolazzi')]", "xpath:innerText"]
+      ],
+      "value": "NBA Project Nicolà Bertolazzi"
+    }, {
+      "id": "404ac734-74ae-42bc-a1d7-1ea5109d47c2",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//a[@id='navbarDropdownUserImage']/img",
+      "targets": [
+        ["css=.img-fluid", "css:finder"],
+        ["xpath=//a[@id='navbarDropdownUserImage']/img", "xpath:idRelative"],
+        ["xpath=//a/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b58e149-406d-4e4f-8f98-8d5e4f9c5eb1",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.dropdown-item:nth-child(4)", "css:finder"],
+        ["xpath=//nav[@id='sidenavAccordion']/ul/li[2]/div/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/admin/logout')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a36a2c5-d440-4fce-91c6-5cc4158badab",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.fw-light",
+      "targets": [
+        ["css=.fw-light", "css:finder"],
+        ["xpath=//div[@id='layoutAuthentication_content']/main/div/div/div/div/div/h3", "xpath:idRelative"],
+        ["xpath=//h3", "xpath:position"],
+        ["xpath=//h3[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": "Login"
+    }]
+  }],
+  "suites": [{
+    "id": "967091d2-69df-42c5-baf5-03e5dd5d945a",
+    "name": "Auth suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["fe57fe9b-c977-4eb1-b0f7-efaa8f39aca9", "9a33216d-de9e-4a12-b0a0-2e43849f26ac", "cd54cc33-bf42-433e-ba8d-4b0294e1da39"]
+  }],
+  "urls": ["http://127.0.0.1:5000/", "http://127.0.0.1:5000/auth/login"],
+  "plugins": []
+}

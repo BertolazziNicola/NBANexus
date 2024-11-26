@@ -1,0 +1,300 @@
+[{
+  "_id": {
+    "$oid": "67460b31cb817601828fb467"
+  },
+  "division": "ATLANTIC",
+  "team_id": "1610612738",
+  "slug": "celtics",
+  "name": "Boston Celtics",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b31cb817601828fb468"
+  },
+  "division": "ATLANTIC",
+  "team_id": "1610612751",
+  "slug": "nets",
+  "name": "Brooklyn Nets",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612751/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b31cb817601828fb469"
+  },
+  "division": "ATLANTIC",
+  "team_id": "1610612752",
+  "slug": "knicks",
+  "name": "New York Knicks",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612752/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b31cb817601828fb46a"
+  },
+  "division": "ATLANTIC",
+  "team_id": "1610612755",
+  "slug": "sixers",
+  "name": "Philadelphia 76ers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612755/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b31cb817601828fb46b"
+  },
+  "division": "ATLANTIC",
+  "team_id": "1610612761",
+  "slug": "raptors",
+  "name": "Toronto Raptors",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612761/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b33cb817601828fb46c"
+  },
+  "division": "CENTRAL",
+  "team_id": "1610612741",
+  "slug": "bulls",
+  "name": "Chicago Bulls",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612741/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b33cb817601828fb46d"
+  },
+  "division": "CENTRAL",
+  "team_id": "1610612739",
+  "slug": "cavaliers",
+  "name": "Cleveland Cavaliers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612739/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b34cb817601828fb46e"
+  },
+  "division": "CENTRAL",
+  "team_id": "1610612765",
+  "slug": "pistons",
+  "name": "Detroit Pistons",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612765/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b34cb817601828fb46f"
+  },
+  "division": "CENTRAL",
+  "team_id": "1610612754",
+  "slug": "pacers",
+  "name": "Indiana Pacers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612754/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b34cb817601828fb470"
+  },
+  "division": "CENTRAL",
+  "team_id": "1610612749",
+  "slug": "bucks",
+  "name": "Milwaukee Bucks",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612749/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b34cb817601828fb471"
+  },
+  "division": "SOUTHEAST",
+  "team_id": "1610612737",
+  "slug": "hawks",
+  "name": "Atlanta Hawks",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612737/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b34cb817601828fb472"
+  },
+  "division": "SOUTHEAST",
+  "team_id": "1610612766",
+  "slug": "hornets",
+  "name": "Charlotte Hornets",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612766/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb473"
+  },
+  "division": "SOUTHEAST",
+  "team_id": "1610612748",
+  "slug": "heat",
+  "name": "Miami Heat",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb474"
+  },
+  "division": "SOUTHEAST",
+  "team_id": "1610612753",
+  "slug": "magic",
+  "name": "Orlando Magic",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612753/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb475"
+  },
+  "division": "SOUTHEAST",
+  "team_id": "1610612764",
+  "slug": "wizards",
+  "name": "Washington Wizards",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612764/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb476"
+  },
+  "division": "NORTHWEST",
+  "team_id": "1610612743",
+  "slug": "nuggets",
+  "name": "Denver Nuggets",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612743/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb477"
+  },
+  "division": "NORTHWEST",
+  "team_id": "1610612750",
+  "slug": "timberwolves",
+  "name": "Minnesota Timberwolves",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612750/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb478"
+  },
+  "division": "NORTHWEST",
+  "team_id": "1610612760",
+  "slug": "thunder",
+  "name": "Oklahoma City Thunder",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612760/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b37cb817601828fb479"
+  },
+  "division": "NORTHWEST",
+  "team_id": "1610612757",
+  "slug": "blazers",
+  "name": "Portland Trail Blazers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612757/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b38cb817601828fb47a"
+  },
+  "division": "NORTHWEST",
+  "team_id": "1610612762",
+  "slug": "jazz",
+  "name": "Utah Jazz",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612762/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b38cb817601828fb47b"
+  },
+  "division": "PACIFIC",
+  "team_id": "1610612744",
+  "slug": "warriors",
+  "name": "Golden State Warriors",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612744/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb47c"
+  },
+  "division": "PACIFIC",
+  "team_id": "1610612746",
+  "slug": "clippers",
+  "name": "LA Clippers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612746/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb47d"
+  },
+  "division": "PACIFIC",
+  "team_id": "1610612747",
+  "slug": "lakers",
+  "name": "Los Angeles Lakers",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612747/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb47e"
+  },
+  "division": "PACIFIC",
+  "team_id": "1610612756",
+  "slug": "suns",
+  "name": "Phoenix Suns",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612756/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb47f"
+  },
+  "division": "PACIFIC",
+  "team_id": "1610612758",
+  "slug": "kings",
+  "name": "Sacramento Kings",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612758/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb480"
+  },
+  "division": "SOUTHWEST",
+  "team_id": "1610612742",
+  "slug": "mavericks",
+  "name": "Dallas Mavericks",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612742/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb481"
+  },
+  "division": "SOUTHWEST",
+  "team_id": "1610612745",
+  "slug": "rockets",
+  "name": "Houston Rockets",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612745/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb482"
+  },
+  "division": "SOUTHWEST",
+  "team_id": "1610612763",
+  "slug": "grizzlies",
+  "name": "Memphis Grizzlies",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612763/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3acb817601828fb483"
+  },
+  "division": "SOUTHWEST",
+  "team_id": "1610612740",
+  "slug": "pelicans",
+  "name": "New Orleans Pelicans",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612740/global/L/logo.svg"
+},
+{
+  "_id": {
+    "$oid": "67460b3bcb817601828fb484"
+  },
+  "division": "SOUTHWEST",
+  "team_id": "1610612759",
+  "slug": "spurs",
+  "name": "San Antonio Spurs",
+  "img_src": "https://cdn.nba.com/logos/nba/1610612759/global/L/logo.svg"
+}]
