@@ -1,0 +1,280 @@
+{% extends "base/base.html" %}
+
+{% block title %}Import players{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon">
+                            <i data-feather="share"></i>
+                        </div>
+                        Admin - Import players
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header">Current Imports Table</div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center loading-message m-3">
+                        <div class="spinner-border" role="status" aria-hidden="true"></div>
+                        <strong class="message d-none">No data found</strong>
+                    </div>
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-container">
+                            <table id="table-dates" class="datatable-table">
+                                <thead>
+                                    <tr>
+                                        <th aria-sort="descending" class="datatable-descending"
+                                            style="width: 15.469061876247507%;"><a>Season</a>
+                                        </th>
+                                        <th style="width: 23.75249500998004%;"><a>Total players</a></th>
+                                        <th style="width: 12.075848303393213%;"><a>Actions</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-dates-body">
+                                    <!-- Load data here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="reload-button d-flex justify-content-center d-none">
+                        <button type="button" class="btn btn-light" onclick="loadData()">Reload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">New Import</div>
+                <div class="card-body">
+                    <form id="form-import">
+                        <!-- Form Group (season)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">New season</label>
+                            <input class="form-control" type="text" placeholder="YYYY-YY" id="season-input">
+                        </div>
+
+                        <!-- Form Group (overwrite)-->
+                        <div class="mb-3">
+                            <input class="form-check-input" type="checkbox" name="overwrite" checked>
+                            <label class="form-check-label">
+                                Overwrite if already exists
+                            </label>
+                        </div>
+
+                        <!-- Progress bar -->
+                        <div class="progress mb-3 d-none">
+                            <!-- Change width to progress -->
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+
+                        <!-- Error label -->
+                        <div class="mb-3 d-none" id="import-error">
+                            <label class="medium mb-1 text-danger"></label>
+                        </div>
+
+                        <!-- Success label -->
+                        <div class="mb-3 d-none" id="import-success">
+                            <label class="medium mb-1 text-success"></label>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary submit-button" disabled onclick="importSeason()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/datatables/datatables-simple-demo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/import-functions.js') }}"></script>
+<script>
+    // Function to load table data (GET)
+    function loadData() {
+        // 1. Show only the loading spinner when the page is loading
+        const loadingMessage = $(".loading-message");
+        loadingMessage.find('.spinner-border').removeClass('d-none')
+        loadingMessage.find('.message').addClass('d-none')
+        $('.reload-button').addClass('d-none')
+
+        // Reset table
+        let tableBody = $("#table-dates-body");
+        tableBody.html('')
+
+        // 2. Use AJAX to get data from your API
+        $.ajax({
+            url: '{{ url_for("api.get_import_dates") }}',
+            method: 'GET',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                // 3. Load data
+
+                // If dates are null display error message
+                if (data.dates == null) {
+                    return loadingMessage.find('.message').removeClass('d-none')
+                }
+
+                // Load data into table
+                let index = 0;
+
+                data.dates.forEach(element => {
+                    let html = `
+                            <tr>
+                                <td>${element._id}</td>
+                                <td>${element.count}</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" 
+                                        title="Show players"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+                                        stroke-linejoin="round" class="feather feather-eye">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3">
+                                        </circle></svg></button>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                        onclick="reimportSeason('${element._id}')"
+                                        title="Reimport season"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-ccw">
+                                            <polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline>
+                                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                                            </svg></button>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" 
+                                        title="Delete season"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal3">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-trash-2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path
+                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                            </path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg></button>
+                                </td>
+                            </tr>
+                    `;
+
+                    tableBody.append(html);
+                    index++;
+                });
+            },
+            error: function (error) {
+                // 4. Show error message
+                loadingMessage.find('.message').removeClass('d-none')
+            },
+            // 5. Always hide loading spinner and show reload button
+            complete: function () {
+                loadingMessage.find('.spinner-border').addClass('d-none')
+                $('.reload-button').removeClass('d-none')
+            }
+        });
+    }
+
+    // Function to send season to import (POST)
+    function importSeason() {
+        // Make progress animation
+        $('.progress').removeClass('d-none')
+        var progress = 0; // Start
+        var interval = setInterval(function () {
+            progress += 1; // + 1%
+            $('.progress-bar').css('width', progress + '%');
+
+            // Stop at 95 %
+            if (progress >= 95) {
+                clearInterval(interval);
+            }
+
+            // Inputs property to disabled
+            $('#season-input').prop('disabled', true)
+            $('.submit-button').prop('disabled', true)
+            $('input[type="checkbox"][name="overwrite"]').prop('disabled', true)
+        }, 500); // Every 1 sec
+
+        // Send req
+        $.ajax({
+            url: '{{ url_for("api.post_import_players") }}',
+            method: 'POST',
+            timeout: 180000, // 3 min
+            'data': JSON.stringify({
+                "season": $('#season-input').val(),
+                "overwrite": $('input[type="checkbox"][name="overwrite"]').is(':checked')
+            }),
+            'contentType': 'application/json',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                $('.progress-bar').css('width', '100%');
+
+                // 3. Show success message and refresh table
+                $('#import-success').find('label').html("Players imported succesfully")
+                $('#import-success').removeClass('d-none')
+                $('#import-error').addClass('d-none')
+
+                loadData();
+            },
+            error: function (error) {
+                // 4. Show error message
+                $('#import-error').find('label').html(error.responseJSON.message)
+                $('#import-error').removeClass('d-none')
+                $('#import-success').addClass('d-none')
+
+                $('.progress-bar').addClass('bg-danger');
+            },
+            // 5. Always hide loading spinner and show reload button
+            complete: function () {
+                clearInterval(interval);
+
+                // Inputs property to enabled and reset all
+                $('#season-input').val("")
+                $('#season-input').prop('disabled', false)
+                $('.submit-button').prop('disabled', false)
+                $('input[type="checkbox"][name="overwrite"]').prop('disabled', false)
+
+                // Reset progress bar (after 2 sec)
+                setTimeout(function () {
+                    $('.progress').addClass('d-none')
+                    $('.progress-bar').css('width', '0%');
+                    $('.progress-bar').addClass('bg-success');
+                    $('.progress-bar').removeClass('bg-danger');
+                }, 2000);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#form-import').on('submit', function (e) {
+            e.preventDefault();
+        })
+        loadData();
+        seasonInputCheck('#season-input');
+    });
+</script>
+{% endblock %}

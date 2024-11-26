@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Static Example</title>
+    <!-- <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}"> -->
+    <!-- Link al file CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col">
+            <h3>Sign Up</h3>
+            <form method="POST" action="signup">
+                <div class="mb-3">
+                    <input class="form-control" type="email" name="email" placeholder="Your Email" autofocus="">
+                </div>
+            
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="username" placeholder="Your Name">
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" placeholder="Your Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+
+</html>

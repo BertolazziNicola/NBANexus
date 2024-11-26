@@ -1,0 +1,252 @@
+{% extends "base/base.html" %}
+
+{% block title %}Import teams{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon">
+                            <i data-feather="share"></i>
+                        </div>
+                        Admin - Import teams
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header">Current Imports Table</div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center loading-message m-3">
+                        <div class="spinner-border" role="status" aria-hidden="true"></div>
+                        <strong class="message d-none">No data found</strong>
+                    </div>
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-container">
+                            <table id="table-dates" class="datatable-table">
+                                <thead>
+                                    <tr>
+                                        <th aria-sort="descending" class="datatable-descending"
+                                            style="width: 5.469061876247507%;"><a>Team Id</a></th>
+                                        <th><a>Icon</a></th>
+                                        <th><a>Src (NBA Website)</a></th>
+                                        <th><a>Name</a></th>
+                                        <th><a>Slug</a></th>
+                                        <th><a>Division</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-dates-body">
+                                    <!-- Load data here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="reload-button d-flex justify-content-center d-none">
+                        <button type="button" class="btn btn-light" onclick="loadData()">Reload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">New Import</div>
+                <div class="card-body">
+                    <form id="form-import">
+                        <!-- Form Group (overwrite)-->
+                        <div class="mb-3">
+                            <input class="form-check-input" type="checkbox" name="overwrite" checked>
+                            <label class="form-check-label">
+                                Overwrite if already exists
+                            </label>
+                        </div>
+
+                        <!-- Form Group (save-images)-->
+                        <div class="mb-3">
+                            <input class="form-check-input" type="checkbox" name="save-images" checked>
+                            <label class="form-check-label">
+                                Choose to save the images
+                            </label>
+                        </div>
+
+                        <!-- Progress bar -->
+                        <div class="progress mb-3 d-none">
+                            <!-- Change width to progress -->
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+
+                        <!-- Error label -->
+                        <div class="mb-3 d-none" id="import-error">
+                            <label class="medium mb-1 text-danger"></label>
+                        </div>
+
+                        <!-- Success label -->
+                        <div class="mb-3 d-none" id="import-success">
+                            <label class="medium mb-1 text-success"></label>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary submit-button" onclick="importTeams()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/datatables/datatables-simple-demo.js') }}"></script>
+<script>
+    function capitalizeFirstLetter(str) {
+        if (str.length === 0) return str; // If the string is empty, return it as is
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    // Function to load table data (GET)
+    function loadData() {
+        // 1. Show only the loading spinner when the page is loading
+        const loadingMessage = $(".loading-message");
+        loadingMessage.find('.spinner-border').removeClass('d-none')
+        loadingMessage.find('.message').addClass('d-none')
+        $('.reload-button').addClass('d-none')
+
+        // Reset table
+        let tableBody = $("#table-dates-body");
+        tableBody.html('')
+
+        // 2. Use AJAX to get data from your API
+        $.ajax({
+            url: '{{ url_for("api.get_import_teams") }}',
+            method: 'GET',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                // 3. Load data
+
+                // If dates are null display error message
+                if (data.teams == null) {
+                    return loadingMessage.find('.message').removeClass('d-none')
+                }
+
+                // Load data into table
+                let index = 0;
+
+                data.teams.forEach(element => {
+
+                    let html = `
+                            <tr>
+                                <td>${element.team_id}</td>
+                                <td><img class="icon-medium" src="{{ url_for('static', filename='assets/teams-logo/') }}${element.slug}.svg"></td>
+                                <td>${element.img_src}</td>
+                                <td>${element.name}</td>
+                                <td>${capitalizeFirstLetter(element.slug)}</td>
+                                <td>${capitalizeFirstLetter(element.division)}</td>
+                            </tr>
+                    `;
+
+                    tableBody.append(html);
+                    index++;
+                });
+            },
+            error: function (error) {
+                // 4. Show error message
+                loadingMessage.find('.message').removeClass('d-none')
+            },
+            // 5. Always hide loading spinner and show reload button
+            complete: function () {
+                loadingMessage.find('.spinner-border').addClass('d-none')
+                $('.reload-button').removeClass('d-none')
+            }
+        });
+    }
+
+    function importTeams(){
+        // Make progress animation
+        $('.progress').removeClass('d-none')
+        var progress = 0; // Start
+        var interval = setInterval(function () {
+            progress += 1; // + 1%
+            $('.progress-bar').css('width', progress + '%');
+
+            // Stop at 95 %
+            if (progress >= 95) {
+                clearInterval(interval);
+            }
+
+            // Inputs property to disabled
+            $('.submit-button').prop('disabled', true)
+            $('input[type="checkbox"][name="overwrite"]').prop('disabled', true)
+            $('input[type="checkbox"][name="save-images"]').prop('disabled', true)
+        }, 500); // Every 1 sec
+
+        // Send req
+        $.ajax({
+            url: '{{ url_for("api.post_import_teams") }}',
+            method: 'POST',
+            timeout: 180000, // 3 min
+            'data': JSON.stringify({
+                "overwrite": $('input[type="checkbox"][name="overwrite"]').is(':checked'),
+                "save-images": $('input[type="checkbox"][name="save-images"]').is(':checked')
+            }),
+            'contentType': 'application/json',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                $('.progress-bar').css('width', '100%');
+
+                // 3. Show success message and refresh table
+                $('#import-success').find('label').html("Teams imported succesfully")
+                $('#import-success').removeClass('d-none')
+                $('#import-error').addClass('d-none')
+
+                loadData();
+            },
+            error: function (error) {
+                // 4. Show error message
+                $('#import-error').find('label').html(error.responseJSON.message)
+                $('#import-error').removeClass('d-none')
+                $('#import-success').addClass('d-none')
+
+                $('.progress-bar').addClass('bg-danger');
+            },
+            // 5. Always hide loading spinner and show reload button
+            complete: function () {
+                clearInterval(interval);
+
+                // Inputs property to enabled and reset all
+                $('.submit-button').prop('disabled', false)
+                $('input[type="checkbox"][name="overwrite"]').prop('disabled', false)
+                $('input[type="checkbox"][name="save-images"]').prop('disabled', false)
+
+                // Reset progress bar (after 2 sec)
+                setTimeout(function () {
+                    $('.progress').addClass('d-none')
+                    $('.progress-bar').css('width', '0%');
+                    $('.progress-bar').addClass('bg-success');
+                    $('.progress-bar').removeClass('bg-danger');
+                }, 2000);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#form-import').on('submit', function (e) {
+            e.preventDefault();
+        })
+        loadData();
+    });
+</script>
+{% endblock %}

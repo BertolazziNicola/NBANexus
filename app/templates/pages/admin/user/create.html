@@ -1,0 +1,88 @@
+{% extends "base/base.html" %}
+
+{% block title %}Create user{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="user-plus"></i></div>
+                        Admin - Create user
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin.post_user_create') }}" method="POST">
+                        <!-- Form Group (email)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Email</label>
+                            <input class="form-control" type="text" value="" name="email" oninput="inputsCheck(this);submitPropertyCreate(this)"
+                             placeholder="Enter email" required>
+                        </div>
+
+                        <!-- Form Row (password) -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Password</label>
+                                <input class="form-control" type="password" placeholder="Enter password" oninput="inputsCheck(this);submitPropertyCreate(this)"
+                                    name="password" required>
+
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Re Password</label>
+                                <input class="form-control" type="password" placeholder="Re-enter password" oninput="inputsCheck(this);submitPropertyCreate(this)"
+                                    name="re-password" required>
+                            </div>
+                        </div>
+
+                        <!-- Form Group (role)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Role</label>
+                            <select class="form-select" name="role">
+                                <option value="Admin" selected>Admin</option>
+                              </select>
+                        </div>
+
+                        <!-- Error label -->
+                        <div class="mb-3 d-none" id="error">
+                            <label class="medium mb-1 text-danger"></label>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit" disabled>Create user</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/create-user-functions.js') }}"></script>
+{% endblock %}

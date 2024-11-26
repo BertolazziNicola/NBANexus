@@ -1,0 +1,92 @@
+{% extends "base/base.html" %}
+
+{% block title %}Modify account{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg></div>
+                        Account Settings - Modify
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin.post_user_modify') }}" method="POST">
+                        <input type="hidden" name="_id" value="{{ user['_id'] }}">
+                        <!-- Form Group (email)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Email</label>
+                            <input class="form-control" type="text" value="{{ user['email'] }}" readonly
+                                disabled>
+                        </div>
+
+                        <!-- Form Row (password) -->
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1">Password</label>
+                                <input class="form-control" type="password" placeholder="User current password"
+                                oninput="passwordAndNewPassordCheck(this);submitProperty(this)"
+                                    name="password" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1">New Password</label>
+                                <input class="form-control" type="password" placeholder="Enter new password"
+                                oninput="passwordAndNewPassordCheck(this);submitProperty(this)"
+                                    name="new-password" required>
+                            </div>
+                        </div>
+
+                        <!-- Form Group (role)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Role</label>
+                            <input class="form-control" type="text" value="{{ user['role'] | capitalize }}"
+                                readonly disabled>
+                        </div>
+
+                        <!-- Error label -->
+                        <div class="mb-3 d-none" id="error">
+                            <label class="medium mb-1 text-danger"></label>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit" disabled>Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/modify-user-functions.js') }}"></script>
+{% endblock %}

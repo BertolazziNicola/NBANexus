@@ -1,0 +1,180 @@
+{% extends "base/base.html" %}
+
+{% block title %}Users list{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon">
+                            <i data-feather="user"></i>
+                        </div>
+                        Admin - Users list
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header">Users Table</div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center loading-message m-3">
+                        <div class="spinner-border" role="status" aria-hidden="true"></div>
+                        <strong class="message d-none">No data found</strong>
+                    </div>
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-container">
+                            <table id="table-dates" class="datatable-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15%;"><a>ID</a></th>
+                                        <th><a>Email</a></th>
+                                        <th><a>Is Active</a></th>
+                                        <th><a>Role</a></th>
+                                        <th><a>Actions</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-dates-body">
+                                    <!-- Load data here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="reload-button d-flex justify-content-center d-none">
+                        <button type="button" class="btn btn-light" onclick="loadData()">Reload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/datatables/datatables-simple-demo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/list-functions.js') }}"></script>
+<script>
+    // Function to load table data (GET)
+    function loadData() {
+        // 1. Show only the loading spinner when the page is loading
+        const loadingMessage = $(".loading-message");
+        loadingMessage.find('.spinner-border').removeClass('d-none')
+        loadingMessage.find('.message').addClass('d-none')
+        $('.reload-button').addClass('d-none')
+
+        // Reset table
+        let tableBody = $("#table-dates-body");
+        tableBody.html('')
+
+        // 2. Use AJAX to get data from your API
+        $.ajax({
+            url: '{{ url_for("api.get_users") }}',
+            method: 'GET',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                // 3. Load data
+
+                // If dates are null display error message
+                if (data.users == null) {
+                    return loadingMessage.find('.message').removeClass('d-none')
+                }
+
+                // Load data into table
+                let index = 0;
+
+                data.users.forEach(element => {
+                    let pathModifyPage = "{{ url_for('admin.get_user_modify') }}"
+                    let html = `
+                            <tr>
+                                <td>${element._id}</td>
+                                <td>${element.email}</td>
+                                <td>${element.is_active ?
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check" viewBox="0 0 16 16"><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/></svg>'
+                            :
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></svg>'
+                        }</td>
+                                <td>${element.role}</td>
+                                <td>
+                                    <a href='${pathModifyPage}?_id=${element._id}'><button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button
+                                        data-bs-toggle="tooltip" data-bs-placement="top" 
+                                        title="Edit user">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                        class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                            </path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                            </svg></button></a>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        onclick="deleteUser('${element._id}')"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" 
+                                        title="Delete user"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal3">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-trash-2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path
+                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                            </path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg></button>
+                                </td>
+                            </tr>
+                    `;
+
+                    tableBody.append(html);
+                    index++;
+                });
+            },
+            error: function (error) {
+                // 4. Show error message
+                loadingMessage.find('.message').removeClass('d-none')
+            },
+            // 5. Always hide loading spinner and show reload button
+            complete: function () {
+                loadingMessage.find('.spinner-border').addClass('d-none')
+                $('.reload-button').removeClass('d-none')
+            }
+        });
+    }
+
+
+    function deleteUser(_id) {
+        $.ajax({
+            url: '{{ url_for("admin.post_delete_user") }}',
+            method: 'POST',
+            'data': JSON.stringify({
+                "_id": _id
+            }),
+            'contentType': 'application/json',
+            headers: {
+                'x-api-key': '{{ session["user"]["api_key"] }}'
+            },
+            success: function (data) {
+                alert("User deleted")
+                loadData()
+            },
+            error: function (error) {
+                alert(error.responseJSON.message)
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        loadData();
+    });
+</script>
+{% endblock %}

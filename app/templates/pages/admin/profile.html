@@ -1,0 +1,113 @@
+{% extends "base/base.html" %}
+
+{% block title %}Profile settings{% endblock %}
+
+{% block content %}
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+    <div class="container-xl px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg></div>
+                        Account Settings - Profile
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main page content-->
+<div class="container-xl px-4 mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form action="{{ url_for('admin.profile') }}" method="POST">
+                        <!-- Form Group (email)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Email</label>
+                            <input class="form-control" type="text" value="{{ session['user']['email'] }}" readonly
+                                disabled>
+                        </div>
+                        <!-- Form Row (api key)-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (api key) -->
+                            <div class="col-10">
+                                <label class="small mb-1">API Key</label>
+                                <input class="form-control" type="text" value="{{ session['user']['api_key'] }}" id="api-key"
+                                    readonly>
+                            </div>
+                            <!-- Form Group copy -->
+                            <div class="col-2">
+                                <br><br>
+                                <svg data-bs-toggle="tooltip" data-bs-placement="top" title="Copy"
+                                    onclick="copyFromIcon(this, 'api-key')" style="cursor: pointer;"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-copy">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Form Row (password) -->
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1">Password</label>
+                                <input class="form-control" type="password" placeholder="Enter your current password"
+                                    oninput="passwordAndNewPassordCheck(this);submitPropertyProfile(this)"
+                                    name="password" required>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1">New Password</label>
+                                <input class="form-control" type="password" placeholder="Enter new password"
+                                    oninput="passwordAndNewPassordCheck(this);submitPropertyProfile(this)"
+                                    name="new-password" required>
+                            </div>
+                        </div>
+
+                        <!-- Form Group (role)-->
+                        <div class="mb-3">
+                            <label class="small mb-1">Role</label>
+                            <input class="form-control" type="text" value="{{ session['user']['role'] | capitalize }}"
+                                readonly disabled>
+                        </div>
+
+                        <!-- Error label -->
+                        <div class="mb-3 d-none" id="error">
+                            <label class="medium mb-1 text-danger"></label>
+                        </div>
+
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit" disabled>Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/profile-functions.js') }}"></script>
+{% endblock %}
