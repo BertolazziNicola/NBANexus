@@ -61,6 +61,11 @@ The path for saving the **teams-logo** is specified in the `.env` file. Please b
 
 --- 
 
+## Important Note on .env and .gitignore
+To simplify the setup, the .gitignore file does not ignore the .env file in this repository.
+
+--- 
+
 ## How to Run
 
 To run the application, follow these steps:
